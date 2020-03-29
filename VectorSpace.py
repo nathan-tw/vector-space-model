@@ -1,8 +1,9 @@
 from pprint import pprint
 from Parser import Parser
 from textblob import TextBlob as tb
+import numpy as np
 import util
-
+import nltk
 
 class VectorSpace:
     """ A algebraic model for representing text documents as vectors of identifiers. 
@@ -34,6 +35,7 @@ class VectorSpace:
         self.vectorKeywordIndex = self.getVectorKeywordIndex(documents)
         # self.tfVectors = [self.makeTfVector(document) for document in documents]
         self.tfidfVectors = [self.makeTfidfVector(document) for document in documents]
+        
 
 
 
@@ -81,8 +83,11 @@ class VectorSpace:
         wordList = self.parser.removeStopWords(wordList)
         wordSet = set(wordList)
         for word in wordSet:
-            tfidf = util.tfidf(word, wordList, self.documents)
-            vector[self.vectorKeywordIndex[word]]+=tfidf
+            try:
+                tfidf = util.tfidf(word, wordList, self.documents)
+                vector[self.vectorKeywordIndex[word]]+=tfidf
+            except: 
+                continue
         return vector
 
 
@@ -100,3 +105,14 @@ class VectorSpace:
         tfidf_dist = [util.euclidean(queryVector, documentVector) for documentVector in self.tfidfVectors]
         return [tfidf_cos, tfidf_dist]
 
+    def getRelevanceFeedbackVector(self, wordString):
+        """ @pre: unique(vectorIndex) """
+        #Initialise vector with 0's
+        wordList = self.parser.tokenise(wordString)
+        wordList = self.parser.removeStopWords(wordList)
+        result = nltk.pos_tag(wordList)
+        feedbackWord = []
+        for word in result:
+            if ('VB' in word[1] or 'NN' in word[1]):
+                feedbackWord.append(word[0])
+        return np.array(self.makeTfidfVector(' '.join(feedbackWord)))*0.5

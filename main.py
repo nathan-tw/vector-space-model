@@ -2,7 +2,6 @@ import VectorSpace
 import ReadFiles
 import numpy as np
 import util
-import RelevanceFeedback as rf
 
 
 def sortByRatings(lst):
@@ -49,16 +48,12 @@ if __name__ == '__main__':
     print('TF-IDF Weighting + Euclidean Distance:')
     printResult(top5_tfidf_dist)
 
-    feedBackIndex = [indexes.index(feedback[0]) for feedback in top5_tfidf_cos]
-    feedBackDocument = [contents[index] for index in feedBackIndex]
-    scores = []
-    for doc in feedBackDocument:
-        feedbackWord = rf.nn_and_vb(doc)
-        feedbackVector = np.array(vectorspace.makeTfidfVector(' '.join(feedbackWord)))*0.5
-        qfVector = queryVector+feedbackVector
-        finalScore = util.cosine(qfVector, queryVector)
-        scores.append(finalScore)
-    relevanceFeedback = sorted(list(zip(feedBackIndex, scores)), reverse=True, key=sortByRatings)
+    key = top5_tfidf_cos[0][0]
+    doc = contents.index(key)
+    feedbackVector = vectorspace.getRelevanceFeedbackVector(doc)
+    qfVector = queryVector+feedbackVector
+    scores = [util.cosine(queryVector, documentVector) for documentVector in vectorspace.tfidfVectors]
+    relevanceFeedback = sorted(list(zip(indexes, scores)), reverse=True, key=sortByRatings)
 
     print('Feedback Queries + TF-IDF Weighting + Cosine Similarity:')
     printResult(relevanceFeedback)
