@@ -2,7 +2,11 @@ import VectorSpace
 import ReadFiles
 import numpy as np
 import util
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument("-q", "--query",dest="query", help="input a query")
+arg = parser.parse_args()
 
 def sortByRatings(lst):
     return lst[1]
@@ -25,7 +29,7 @@ if __name__ == '__main__':
     
 
     # search a test query
-    query = 'drill wood sharp'
+    query = arg.query
     queryVector = np.array(vectorspace.makeTfidfVector(query))
     [tf_cos, tf_dist] = vectorspace.searchTf(query)
     [tfidf_cos, tfidf_dist] = vectorspace.searchTfidf(query)
@@ -48,12 +52,15 @@ if __name__ == '__main__':
     print('TF-IDF Weighting + Euclidean Distance:')
     printResult(top5_tfidf_dist)
 
-    key = top5_tfidf_cos[0][0]
-    doc = contents.index(key)
+    #create feedback-relevance vector
+    newQueryIndex = indexes.index(top5_tfidf_cos[0][0])
+    doc = contents[newQueryIndex]
     feedbackVector = vectorspace.getRelevanceFeedbackVector(doc)
     qfVector = queryVector+feedbackVector
-    scores = [util.cosine(queryVector, documentVector) for documentVector in vectorspace.tfidfVectors]
-    relevanceFeedback = sorted(list(zip(indexes, scores)), reverse=True, key=sortByRatings)
+
+    # compute the scores and re-rank
+    scores = [util.cosine(qfVector, documentVector) for documentVector in vectorspace.tfidfVectors]
+    relevanceFeedback = sorted(list(zip(indexes, scores)), reverse=True, key=sortByRatings)[:5]
 
     print('Feedback Queries + TF-IDF Weighting + Cosine Similarity:')
     printResult(relevanceFeedback)

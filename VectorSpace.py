@@ -33,7 +33,7 @@ class VectorSpace:
     def build(self,documents):
         """ Create the vector space for the passed document strings """
         self.vectorKeywordIndex = self.getVectorKeywordIndex(documents)
-        # self.tfVectors = [self.makeTfVector(document) for document in documents]
+        self.tfVectors = [self.makeTfVector(document) for document in documents]
         self.tfidfVectors = [self.makeTfidfVector(document) for document in documents]
         
 
