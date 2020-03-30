@@ -25,7 +25,14 @@ remember to put on quotation marks. e.g.,
 
   an object of vector space which is based on documents from input params
   
-* **main.py**
+  - there are 4 attribute in this object:
+    1.  __documents__: based on 2048 documents collected from homedepot.com.
+    2.  __tfVector__: docs embeded in a vector by term frequency formula.
+    3.  __tfidfVectors__: docs embeded in a vector by tf-idf formula.
+    4.  __vectorKeywordIndex__: key word that tokenize and stemmed from documents, return a dictionary contains key-value pairs(keyword:position)
+    5.  __parser__: given a parser from Parser.py
+  
+* **main.py** 
 
   main exacutable function
   
