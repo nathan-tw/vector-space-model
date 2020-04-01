@@ -1,7 +1,6 @@
 # vector-space-model
 an exercise of creating a vector space model
 
-=======
 ## usage
 `$ python main.py --query {query}`
 
