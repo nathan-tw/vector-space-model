@@ -25,8 +25,8 @@ def n_containing(word, documents):
 def idf(word, documents):
 	return math.log(len(documents) / (1 + n_containing(word, documents)))
 
-def tfidf(word, blob, bloblist):
-    return tf(word, blob) * idf(word, bloblist)
+def tfidf(word, wordlist, documents):
+    return tf(word, wordlist) * idf(word, documents)
 
 def cosine(vector1, vector2):
 	return float(dot(vector1,vector2) / (norm(vector1) * norm(vector2)))

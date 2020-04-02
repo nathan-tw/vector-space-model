@@ -108,7 +108,6 @@ class VectorSpace:
 
     def getRelevanceFeedbackVector(self, wordString):
         """ @pre: unique(vectorIndex) """
-        #Initialise vector with 0's
         wordList = self.parser.tokenise(wordString)
         wordList = self.parser.removeStopWords(wordList)
         result = nltk.pos_tag(wordList)
