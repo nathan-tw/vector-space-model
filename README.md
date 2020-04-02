@@ -1,8 +1,6 @@
 # vector-space-model
 an exercise of creating a vector space model
 
-<<<<<<< HEAD
-=======
 ## usage
 `$ python main.py --query {query}`
 
@@ -46,4 +44,3 @@ remember to put on quotation marks. e.g.,
 
   english stop words collection
   
->>>>>>> f9a769b7ada69e8e0b1391445a8fd26efd9c2bdd

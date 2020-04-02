@@ -90,7 +90,7 @@ class VectorSpace:
                 continue
         return vector
 
-
+    #get similarity and distance from term frequency vector
     def searchTf(self, query):
         """ search for documents that match based on a list of terms """
         queryVector = self.makeTfVector(query)
@@ -98,6 +98,7 @@ class VectorSpace:
         tf_dist = [util.euclidean(queryVector, documentVector) for documentVector in self.tfVectors]
         return [tf_cos, tf_dist]
 
+    #get similarity and distance from tf-idf vector
     def searchTfidf(self, query):
         """ search for documents that match based on a list of terms """
         queryVector = self.makeTfidfVector(query)
