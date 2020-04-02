@@ -32,7 +32,7 @@ remember to put on quotation marks. e.g.,
     4.  __vectorKeywordIndex__: key word that tokenize and stemmed from documents, return a dictionary contains key-value pairs(keyword:position)
     5.  __parser__: given a parser from Parser.py
   - there is a special function **getRelevanceFeedbackVector** is used to get a feedback vector by **nltk.pos_tag**:
-  
+
   
 * **main.py** 
 
@@ -43,7 +43,7 @@ remember to put on quotation marks. e.g.,
 
   utilities like tf, idf weighting, and cosine similarity and distance function
   - __tf(word, wordlist)__: simply count frequency of a word in a wordlist
-  - __n_containing(word, documents)__: sum all documents which contains specific 
+  - __n_containing(word, documents)__: sum all documents which contains a specific word
   - __idf(word, documents)__: log(len(documents) / (1 + n_containing(word, documents)))
   - __tfidf(word, wordlist, documents)__: tf(word, wordlist) * idf(word, documents)
   - __cosine(vector1, vector2)__: dot(vector1,vector2) / (norm(vector1) * norm(vector2)), 
